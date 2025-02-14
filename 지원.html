@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>사내기자단 활동 계획서</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        form { max-width: 450px; margin: auto; }
+        label { font-weight: bold; }
+        input, textarea, button { width: 100%; padding: 10px; margin: 10px 0; }
+        button { background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #45A049; }
+    </style>
+</head>
+<body>
+    <h2>사내기자단 활동 계획서</h2>
+    <form id="planForm">
+        <label for="name">이름:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="department">소속:</label>
+        <input type="text" id="department" name="department" required>
+
+        <label for="contentIdea">만들고 싶은 콘텐츠:</label>
+        <textarea id="contentIdea" name="contentIdea" rows="3" required></textarea>
+
+        <label for="passion">열정 및 각오:</label>
+        <textarea id="passion" name="passion" rows="3" required></textarea>
+
+        <button type="button" onclick="generateDoc()">워드 파일 다운로드</button>
+    </form>
+
+    <script>
+        function generateDoc() {
+            const name = document.getElementById('name').value;
+            const department = document.getElementById('department').value;
+            const contentIdea = document.getElementById('contentIdea').value;
+            const passion = document.getElementById('passion').value;
+
+            const content = `\n사내기자단 활동 계획서\n\n이름: ${name}\n소속: ${department}\n\n[ 만들고 싶은 콘텐츠 ]\n${contentIdea}\n\n[ 열정 및 각오 ]\n${passion}`;
+            
+            const blob = new Blob([content], { type: 'application/msword' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `${name}_활동계획서.doc`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
